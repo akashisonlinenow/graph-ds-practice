@@ -6,6 +6,7 @@ using namespace std;
 class Solution
 {
 public:
+    // colors a component
     bool check(int start, int V, vector<int> adj[], int color[])
     {
         queue<int> q;
