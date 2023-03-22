@@ -1,0 +1,119 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution
+{
+public:
+    vector<int> findOrder(int V, int m, vector<vector<int>> prerequisites)
+    {
+        // code here
+        //  refer striver
+        vector<int> adj[V]; // adjacency mat formation
+        for (auto it : prerequisites)
+        {
+            adj[it[1]].push_back(it[0]); // here the given pairs in prerequisites are reversed of than its prev question
+        }
+
+        int indegree[V] = {0}; // indegree formation
+        for (int i = 0; i < V; i++)
+        {
+            for (auto it : adj[i])
+            {
+                indegree[it]++;
+            }
+        }
+
+        queue<int> q;
+        for (int i = 0; i < V; i++)
+        { // initial push to q having indegree 0
+            if (indegree[i] == 0)
+            {
+                q.push(i);
+            }
+        }
+
+        vector<int> topo;
+        while (!q.empty())
+        {
+            int node = q.front();
+            q.pop();
+
+            topo.push_back(node);
+
+            // if node is in your toposort then pls remove it from the indegree
+            for (auto it : adj[node])
+            {
+                if (indegree[it] != 0)
+                    indegree[it]--;
+                if (indegree[it] == 0)
+                {
+                    q.push(it);
+                }
+            }
+        }
+
+        if (topo.size() == V)
+        { // means cycle not present and is possible to finish all tasks return topo
+            return topo;
+        }
+        return {};
+    }
+};
+
+//{ Driver Code Starts.
+
+int check(int V, vector<int> &res, vector<int> adj[])
+{
+    vector<int> map(V, -1);
+    for (int i = 0; i < V; i++)
+    {
+        map[res[i]] = i;
+    }
+    for (int i = 0; i < V; i++)
+    {
+        for (int v : adj[i])
+        {
+            if (map[i] > map[v])
+                return 0;
+        }
+    }
+    return 1;
+}
+
+int main()
+{
+    int T;
+    cin >> T;
+    while (T--)
+    {
+        int n, m;
+        cin >> n >> m;
+        int u, v;
+
+        vector<vector<int>> prerequisites;
+
+        for (int i = 0; i < m; i++)
+        {
+            cin >> u >> v;
+            prerequisites.push_back({u, v});
+        }
+
+        vector<int> adj[n];
+        for (auto pre : prerequisites)
+            adj[pre[1]].push_back(pre[0]);
+
+        Solution obj;
+        vector<int> res = obj.findOrder(n, m, prerequisites);
+        if (!res.size())
+            cout << "No Ordering Possible" << endl;
+        else
+            cout << check(n, res, adj) << endl;
+    }
+
+    return 0;
+}
+// } Driver Code Ends
