@@ -33,6 +33,7 @@ public:
                 {
                     st.erase(it);
                 }
+                usedonlevel.clear(); // to decrease time complexity
             }
 
             string word = vec.back();
