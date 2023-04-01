@@ -75,22 +75,22 @@ public:
         {
             int u = it[0];
             int v = it[1];
-            if (ds.findUPar(u) == ds.findUPar(v))
+            if (ds.findUPar(u) == ds.findUPar(v)) // if both u and v are connected before to its uPar
             {
                 cntExtras++;
             }
             else
-            {
+            { // if not have same uPar then connect it
                 ds.unionBySize(u, v);
             }
         }
-        int cntC = 0;
+        int cntC = 0; // cntC -> count of connected components
         for (int i = 0; i < n; i++)
         {
             if (ds.parent[i] == i)
                 cntC++;
         }
-        int ans = cntC - 1;
+        int ans = cntC - 1; // ans -> no. of operations which will be required to make n/w connected
         if (cntExtras >= ans)
             return ans;
         return -1;
