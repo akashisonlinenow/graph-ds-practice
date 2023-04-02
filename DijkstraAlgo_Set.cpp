@@ -24,7 +24,7 @@ public:
 
         while (!st.empty())
         {
-            auto it = *(st.begin()); // 'it' will point to address of st.begin() and 8 will give the value
+            auto it = *(st.begin()); // 'it' will point to address of st.begin() and * will give the value
             int node = it.second;
             int d = it.first;
             st.erase(it);
