@@ -20,13 +20,13 @@ private:
                 dfs(it, node, vis, adj, tin, low, bridges);
                 low[node] = min(low[it], low[node]);
                 // node --- it
-                if (low[it] > tin[node])
+                if (low[it] > tin[node]) // it is a bridge
                 {
                     bridges.push_back({it, node});
                 }
             }
             else
-            {
+            { // if not bridge then just assign node the min fron node low and adj node's low
                 low[node] = min(low[node], low[it]);
             }
         }
