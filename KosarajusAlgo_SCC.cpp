@@ -52,7 +52,7 @@ public:
         vector<int> adjT[V];
         for (int i = 0; i < V; i++)
         {
-            vis[i] = 0;
+            vis[i] = 0; // MAKING  all nodes unvisited for step 3 dfs.
             for (auto it : adj[i])
             {
                 // i -> it
